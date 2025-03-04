@@ -4,6 +4,7 @@ import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
+  TwitterAuthProvider,
 } from "firebase/auth";
 import { createContext } from "react";
 import auth from "../firebase/firebase";
@@ -14,6 +15,8 @@ export const MainContextProviderContext = createContext();
 const googleProvider = new GoogleAuthProvider();
 // Github Provider
 const githubProvider = new GithubAuthProvider();
+// Twitter Provider
+const twitterProvider = new TwitterAuthProvider();
 
 const AuthProvider = ({ children }) => {
   // Create New Account
@@ -33,11 +36,16 @@ const AuthProvider = ({ children }) => {
   const githubLogin = () => {
     return signInWithPopup(auth, githubProvider);
   };
+  // Twitter Login
+  const twitterLogin = () => {
+    return signInWithPopup(auth, twitterProvider);
+  };
   const info = {
     createNewAccount,
     LoginAccount,
     googleLogin,
     githubLogin,
+    twitterLogin,
   };
   return (
     <div>

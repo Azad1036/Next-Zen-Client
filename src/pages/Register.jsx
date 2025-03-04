@@ -9,9 +9,8 @@ import { MainContextProviderContext } from "../provider/AuthProvider";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { createNewAccount, googleLogin, githubLogin } = useContext(
-    MainContextProviderContext
-  );
+  const { createNewAccount, googleLogin, githubLogin, twitterLogin } =
+    useContext(MainContextProviderContext);
 
   // User Data
   const {
@@ -19,11 +18,6 @@ const Register = () => {
     register,
     formState: { errors },
   } = useForm();
-
-  // const handleRegisterForm = (data) => {
-  //   const { fullName, photoUrl, email, password } = data;
-  //   console.log({ fullName, photoUrl, email, password });
-  // };
 
   const handleRegisterForm = (data) => {
     const { fullName, photoUrl, email, password } = data;
@@ -74,6 +68,24 @@ const Register = () => {
         {
           errorMessage && toast.error("Pls try again");
         }
+      });
+  };
+
+  // Twitter Login User
+  const handleTwitterLogin = () => {
+    twitterLogin()
+      .then((result) => {
+        const user = result.user;
+        {
+          user && toast.success("You have successfully registered!");
+        }
+      })
+      .catch((err) => {
+        const errorMessage = err.message;
+        {
+          errorMessage && toast.error("Pls try again");
+        }
+        console.log(err);
       });
   };
 
@@ -177,6 +189,12 @@ const Register = () => {
             </button>
             <button
               onClick={handleGithubLogin}
+              className="relative w-12 h-12 flex items-center justify-center bg-gray-800 text-white rounded-full group overflow-hidden hover:bg-gray-900 transition-all duration-300 hover:shadow-gray-500/50 hover:scale-110"
+            >
+              <FaGithub size={20} />
+            </button>
+            <button
+              onClick={handleTwitterLogin}
               className="relative w-12 h-12 flex items-center justify-center bg-gray-800 text-white rounded-full group overflow-hidden hover:bg-gray-900 transition-all duration-300 hover:shadow-gray-500/50 hover:scale-110"
             >
               <FaGithub size={20} />
