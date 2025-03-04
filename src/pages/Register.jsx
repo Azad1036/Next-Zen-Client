@@ -1,11 +1,18 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import { IoIosEyeOff, IoMdEye } from "react-icons/io";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { MainContextProviderContext } from "../provider/AuthProvider";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const { createNewAccount, googleLogin, githubLogin } = useContext(
+    MainContextProviderContext
+  );
+
   // User Data
   const {
     handleSubmit,
@@ -13,9 +20,61 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
+  // const handleRegisterForm = (data) => {
+  //   const { fullName, photoUrl, email, password } = data;
+  //   console.log({ fullName, photoUrl, email, password });
+  // };
+
   const handleRegisterForm = (data) => {
     const { fullName, photoUrl, email, password } = data;
-    console.log({ fullName, photoUrl, email, password });
+
+    createNewAccount(email, password)
+      .then((result) => {
+        const user = result.user;
+        {
+          user && toast.success("You have successfully registered!");
+        }
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        {
+          errorMessage && toast.error("Email Already Used");
+        }
+      });
+  };
+
+  // Google Login User
+  const handleGoogleLogin = () => {
+    googleLogin()
+      .then((result) => {
+        const user = result.user;
+        {
+          user && toast.success("You have successfully registered!");
+        }
+      })
+      .catch((err) => {
+        const errorMessage = err.message;
+        {
+          errorMessage && toast.error("Pls try again");
+        }
+      });
+  };
+
+  // Github Login User
+  const handleGithubLogin = () => {
+    githubLogin()
+      .then((result) => {
+        const user = result.user;
+        {
+          user && toast.success("You have successfully registered!");
+        }
+      })
+      .catch((err) => {
+        const errorMessage = err.message;
+        {
+          errorMessage && toast.error("Pls try again");
+        }
+      });
   };
 
   return (
@@ -110,10 +169,16 @@ const Register = () => {
             Other Login in System
           </p>
           <div className="flex justify-center gap-3 mb-4">
-            <button className="relative w-12 h-12 flex items-center justify-center bg-red-500 text-white rounded-full group overflow-hidden hover:bg-red-600 transition-all duration-300 hover:shadow-red-400/50 hover:scale-110">
+            <button
+              className="relative w-12 h-12 flex items-center justify-center bg-red-500 text-white rounded-full group overflow-hidden hover:bg-red-600 transition-all duration-300 hover:shadow-red-400/50 hover:scale-110"
+              onClick={handleGoogleLogin}
+            >
               <FaGoogle size={20} />
             </button>
-            <button className="relative w-12 h-12 flex items-center justify-center bg-gray-800 text-white rounded-full group overflow-hidden hover:bg-gray-900 transition-all duration-300 hover:shadow-gray-500/50 hover:scale-110">
+            <button
+              onClick={handleGithubLogin}
+              className="relative w-12 h-12 flex items-center justify-center bg-gray-800 text-white rounded-full group overflow-hidden hover:bg-gray-900 transition-all duration-300 hover:shadow-gray-500/50 hover:scale-110"
+            >
               <FaGithub size={20} />
             </button>
           </div>
@@ -121,7 +186,7 @@ const Register = () => {
             to="/login"
             className="text-gray-600 hover:text-indigo-600 transition-colors"
           >
-            Already have an account?{" "}
+            Already have an account?
             <span className="font-semibold text-indigo-600">Login</span>
           </Link>
         </div>

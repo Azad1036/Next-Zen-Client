@@ -1,10 +1,34 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { useForm } from "react-hook-form";
 import { FaGithub, FaGoogle } from "react-icons/fa";
-import { Link } from "react-router-dom";
 import { IoIosEyeOff, IoMdEye } from "react-icons/io";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { MainContextProviderContext } from "../provider/AuthProvider";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const { LoginAccount } = useContext(MainContextProviderContext);
+  // User Data
+  const { handleSubmit, register } = useForm();
+
+  const handleLoginForm = (data) => {
+    const { email, password } = data;
+
+    LoginAccount(email, password)
+      .then((result) => {
+        const user = result.user;
+        {
+          user && toast.success("You have successfully Login!");
+        }
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        {
+          errorMessage && toast.error("Email or Password is Wrong");
+        }
+      });
+  };
 
   return (
     <div className="min-h-screen font-ibm-plex flex items-center justify-center bg-gray-50 p-4">
@@ -13,7 +37,7 @@ const Login = () => {
           Login
         </h2>
 
-        <form>
+        <form onSubmit={handleSubmit(handleLoginForm)}>
           <div className="mb-4">
             <label className="block text-gray-600 font-medium mb-1">
               Email
@@ -23,6 +47,7 @@ const Login = () => {
               className="w-full p-2 bg-transparent border-b-2 border-gray-300 focus:border-indigo-500 outline-none transition-all duration-300 placeholder-gray-400"
               placeholder="Enter your email"
               required
+              {...register("email")}
             />
           </div>
 
@@ -35,6 +60,7 @@ const Login = () => {
               className="w-full p-2 bg-transparent border-b-2 border-gray-300 focus:border-indigo-500 outline-none transition-all duration-300 placeholder-gray-400"
               placeholder="Enter your password"
               required
+              {...register("password")}
             />
             <div
               onClick={() => setShowPassword(!showPassword)}
@@ -60,7 +86,9 @@ const Login = () => {
         </form>
 
         <div className="mt-4 text-center">
-          <p className="text-gray-600 mb-2 font-poppins">Other Login in System</p>
+          <p className="text-gray-600 mb-2 font-poppins">
+            Other Login in System
+          </p>
           <div className="flex justify-center gap-3 mb-4">
             <button className="relative w-12 h-12 flex items-center justify-center bg-red-500 text-white rounded-full group overflow-hidden hover:bg-red-600 transition-all duration-300 hover:shadow-red-400/50 hover:scale-110">
               <FaGoogle size={20} />
@@ -69,8 +97,12 @@ const Login = () => {
               <FaGithub size={20} />
             </button>
           </div>
-          <Link to="/register" className="text-gray-600 hover:text-indigo-600 transition-colors">
-            Need an account? <span className="font-semibold text-indigo-600">Register</span>
+          <Link
+            to="/register"
+            className="text-gray-600 hover:text-indigo-600 transition-colors"
+          >
+            Need an account?{" "}
+            <span className="font-semibold text-indigo-600">Register</span>
           </Link>
         </div>
       </div>
