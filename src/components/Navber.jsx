@@ -27,11 +27,11 @@ const Navber = () => {
         </div>
         {/* 3 */}
         <div className="navbar-end">
-          <Link className="hidden lg:btn lg:btn-outline mr-2 text-[#185C65] font-medium">
+          <Link to={"/login"} className="hidden lg:btn lg:btn-outline mr-2 text-[#185C65] font-medium">
             Log in
           </Link>
-          <Link className="hidden lg:btn lg:btn-outline text-[#185C65] font-medium">
-            Sing Up
+          <Link to={"/register"} className="hidden lg:btn lg:btn-outline text-[#185C65] font-medium">
+            Register
           </Link>
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
