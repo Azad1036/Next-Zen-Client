@@ -1,6 +1,9 @@
+import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { MainContextProviderContext } from "../provider/AuthProvider";
 
 const Navber = () => {
+  const { signOutUser, user } = useContext(MainContextProviderContext);
   const links = (
     <>
       <NavLink to={"/"}>Home</NavLink>
@@ -25,14 +28,48 @@ const Navber = () => {
             {links}
           </ul>
         </div>
+
         {/* 3 */}
         <div className="navbar-end">
-          <Link to={"/login"} className="hidden lg:btn lg:btn-outline mr-2 text-[#185C65] font-medium">
-            Log in
-          </Link>
-          <Link to={"/register"} className="hidden lg:btn lg:btn-outline text-[#185C65] font-medium">
-            Register
-          </Link>
+        
+          
+          {user ? (
+            <>
+            <div className="mr-3 w-9 h-9 border rounded-full" >
+        {user?.photoURL ? (
+              <img
+              className=" w-full h-full object-cover"
+              src={user?.photoURL}
+              alt=""
+            />
+          ) : (
+              <img className=" w-full h-full object-cover" src="https://i.ibb.co.com/qLWkbpCH/photourl.png" alt="" /> 
+            )}
+        </div>
+              <Link
+                to={"/"}
+                className="hidden lg:btn lg:btn-outline mr-2 text-[#185C65] font-medium"
+                onClick={signOutUser}
+              >
+                SignOut
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link
+                to={"/login"}
+                className="hidden lg:btn lg:btn-outline mr-2 text-[#185C65] font-medium"
+              >
+                Log in
+              </Link>
+              <Link
+                to={"/register"}
+                className="hidden lg:btn lg:btn-outline text-[#185C65] font-medium"
+              >
+                Register
+              </Link>
+            </>
+          )}
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
               <svg

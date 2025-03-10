@@ -2,11 +2,13 @@ import {
   createUserWithEmailAndPassword,
   GithubAuthProvider,
   GoogleAuthProvider,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
   signInWithPopup,
+  signOut,
   TwitterAuthProvider,
 } from "firebase/auth";
-import { createContext } from "react";
+import { createContext, useEffect, useState } from "react";
 import auth from "../firebase/firebase";
 
 // Main Provider Context Api
@@ -19,13 +21,18 @@ const githubProvider = new GithubAuthProvider();
 const twitterProvider = new TwitterAuthProvider();
 
 const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   // Create New Account
   const createNewAccount = (email, password) => {
+    setLoading(true)
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
   // Login User
   const LoginAccount = (email, password) => {
+    setLoading(true)
     return signInWithEmailAndPassword(auth, email, password);
   };
   //Google Login
@@ -40,13 +47,32 @@ const AuthProvider = ({ children }) => {
   const twitterLogin = () => {
     return signInWithPopup(auth, twitterProvider);
   };
+
+  // SignOut User
+  const signOutUser = () => {
+    return signOut(auth);
+  };
+
   const info = {
+    user,
+    setUser,
+    loading,
     createNewAccount,
     LoginAccount,
+    signOutUser,
     googleLogin,
     githubLogin,
     twitterLogin,
   };
+
+  // user Store
+  useEffect(() => {
+    const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoading(false);
+    });
+    return () => unSubscribe();
+  }, []);
   return (
     <div>
       <MainContextProviderContext.Provider value={info}>

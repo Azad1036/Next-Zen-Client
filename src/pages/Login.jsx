@@ -2,13 +2,14 @@ import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import { IoIosEyeOff, IoMdEye } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { MainContextProviderContext } from "../provider/AuthProvider";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { LoginAccount } = useContext(MainContextProviderContext);
+  const { LoginAccount, setUser } = useContext(MainContextProviderContext);
+  const navigate = useNavigate();
   // User Data
   const { handleSubmit, register } = useForm();
 
@@ -18,6 +19,8 @@ const Login = () => {
     LoginAccount(email, password)
       .then((result) => {
         const user = result.user;
+        setUser(user);
+        navigate("/");
         {
           user && toast.success("You have successfully Login!");
         }
