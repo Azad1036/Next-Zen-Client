@@ -16,7 +16,7 @@ const MyCampaign = () => {
   }, [user]);
   return (
     <div>
-      <UserCompaignslist  />
+      <UserCompaignslist myCampaignData={myCampaignData} />
     </div>
   );
 };
