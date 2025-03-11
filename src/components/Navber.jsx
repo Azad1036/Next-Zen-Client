@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { MainContextProviderContext } from "../provider/AuthProvider";
+import { Tooltip } from "react-tooltip";
 
 const Navber = () => {
   const { signOutUser, user } = useContext(MainContextProviderContext);
@@ -31,21 +32,30 @@ const Navber = () => {
 
         {/* 3 */}
         <div className="navbar-end">
-        
-          
+          <Tooltip
+            className="z-50"
+            anchorSelect=".my-anchor-element"
+            place="top"
+          >
+            {user?.displayName ? user.displayName : "Name Not Found"}
+          </Tooltip>
           {user ? (
             <>
-            <div className="mr-3 w-9 h-9 border rounded-full" >
-        {user?.photoURL ? (
-              <img
-              className=" w-full h-full object-cover"
-              src={user?.photoURL}
-              alt=""
-            />
-          ) : (
-              <img className=" w-full h-full object-cover" src="https://i.ibb.co.com/qLWkbpCH/photourl.png" alt="" /> 
-            )}
-        </div>
+              <div className="mr-3 w-9 h-9 border rounded-full">
+                {user?.photoURL ? (
+                  <img
+                    className=" my-anchor-element w-full h-full object-cover"
+                    src={user?.photoURL}
+                    alt=""
+                  />
+                ) : (
+                  <img
+                    className=" my-anchor-element w-full h-full object-cover"
+                    src="https://i.ibb.co.com/qLWkbpCH/photourl.png"
+                    alt=""
+                  />
+                )}
+              </div>
               <Link
                 to={"/"}
                 className="hidden lg:btn lg:btn-outline mr-2 text-[#185C65] font-medium"

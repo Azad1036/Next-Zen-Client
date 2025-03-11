@@ -9,17 +9,16 @@ const DetailsCampaign = () => {
   const [userName, setUserName] = useState("Not Found");
   const email = user.email;
 
-  
   const { _id, photoUrl, compaignTitle, donationAmount, description, date } =
     data;
 
   useEffect(() => {
-      if (user?.displayName) {
-        setUserName(user.displayName);
-      }
-    }, [user]);
+    if (user?.displayName) {
+      setUserName(user.displayName);
+    }
+  }, [user]);
 
-  const userData = { email, userName };
+  const userData = { email, userName, data };
 
   const handleDonationUser = () => {
     fetch("http://localhost:4000/donationUser", {

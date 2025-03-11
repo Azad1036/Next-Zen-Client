@@ -66,7 +66,11 @@ const routers = createBrowserRouter([
       },
       {
         path: "/myDonations",
-        element: <MyDonations />,
+        element: (
+          <PrivateRouter>
+            <MyDonations />
+          </PrivateRouter>
+        ),
       },
       {
         path: "/register",

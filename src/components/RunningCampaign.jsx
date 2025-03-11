@@ -4,9 +4,10 @@ import { Link } from "react-router-dom";
 const RunningCampaign = () => {
   const [campaigns, setCampaigns] = useState([]);
   // const [loading, setLoading] = useState(true);
+  const [limit, setLimit] = useState(6);
 
   useEffect(() => {
-    fetch("http://localhost:4000/campaigns")
+    fetch("http://localhost:4000/runningCampaigns")
       .then((res) => res.json())
       .then((data) => {
         setCampaigns(data);
@@ -33,9 +34,7 @@ const RunningCampaign = () => {
             <h3 className="text-xl font-semibold mt-2">
               {campaign.compaignTitle}
             </h3>
-            <p className="text-gray-600">
-              {campaign.description}
-            </p>
+            <p className="text-gray-600">{campaign.description}</p>
             <p className="text-blue-500 font-medium">
               Type: {campaign.compaignType}
             </p>
@@ -54,6 +53,9 @@ const RunningCampaign = () => {
             </Link>
           </div>
         ))}
+      </div>
+      <div className=" text-center my-5">
+        <button className="btn btn-primary ">See More</button>
       </div>
     </div>
   );
