@@ -11,16 +11,16 @@ const AddNewCampaign = () => {
   const { handleSubmit, register } = useForm();
 
   const handleAddCampaignForm = (data) => {
-    const {
-      photoUrl,
-      compaignTitle,
-      compaignType,
-      donationAmount,
-      description,
-      date,
-      email,
-      userName
-    } = data;
+    // const {
+    //   photoUrl,
+    //   compaignTitle,
+    //   compaignType,
+    //   donationAmount,
+    //   description,
+    //   date,
+    //   email,
+    //   userName
+    // } = data;
 
     console.log(data);
 

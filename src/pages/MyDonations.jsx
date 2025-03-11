@@ -3,7 +3,7 @@ import { MainContextProviderContext } from "../provider/AuthProvider";
 import MyDonationlist from "./MyDonationlist";
 
 const MyDonations = () => {
-  const [MyDonationsitem, setMyCampaignData] = useState([]);
+  const [myDonationsitem, setMyCampaignData] = useState([]);
   const { user } = useContext(MainContextProviderContext);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ const MyDonations = () => {
   }, [user]);
   return (
     <div>
-      <MyDonationlist MyDonationsitem={MyDonationsitem} />
+      <MyDonationlist myDonationsitem={myDonationsitem} />
     </div>
   );
 };
