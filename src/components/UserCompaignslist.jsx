@@ -46,7 +46,7 @@ const UserCompaignslist = ({ myCampaignData }) => {
                     <td className="px-6 py-4 border-b border-gray-300 text-center">
                       <div className="flex flex-row space-x-4 justify-center">
                         <Link
-                          to={`/campaign/${campaign._id}`}
+                          to={`/updateCampaign/${campaign._id}`}
                           className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-4 py-2 rounded-lg shadow-md hover:scale-105 transition duration-300"
                         >
                           Update

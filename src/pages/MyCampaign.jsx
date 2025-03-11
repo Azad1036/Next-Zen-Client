@@ -5,7 +5,6 @@ import { MainContextProviderContext } from "../provider/AuthProvider";
 const MyCampaign = () => {
   const [myCampaignData, setMyCampaignData] = useState([]);
   const { user } = useContext(MainContextProviderContext);
-  console.log(myCampaignData);
 
   useEffect(() => {
     if (user.email) {
