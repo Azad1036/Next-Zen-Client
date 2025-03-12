@@ -20,11 +20,11 @@ const MyDonationlist = ({ myDonationsitem }) => {
                   : "bg-white border-gray-200 hover:bg-gray-50"
               }`}
             >
-              <h3 className="text-xl font-semibold">{campaign?.compaignTitle}</h3>
+              <h3 className="text-xl font-semibold">{campaign?.data?.compaignTitle}</h3>
               <p className="text-gray-600">
-                Amount Donated: <strong>${campaign?.donationAmount}</strong>
+                Amount Donated: <strong>${campaign?.data?.donationAmount}</strong>
               </p>
-              <p className="text-gray-500 text-sm">Date: {campaign?.date}</p>
+              <p className="text-gray-500 text-sm">Date: {campaign?.data?.date}</p>
             </div>
           ))
         ) : (

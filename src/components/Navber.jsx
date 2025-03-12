@@ -33,13 +33,13 @@ const Navber = () => {
         {/* User Section */}
         <div className="navbar-end">
           <Tooltip className="z-50" anchorSelect=".my-anchor-element" place="top">
-            {user?.displayName ? user.displayName : "Name Not Found"}
+            {user ? user.displayName : "Name Not Found"}
           </Tooltip>
 
           {user ? (
             <>
               <div className="mr-3 w-10 h-10 border-2 border-secondary rounded-full overflow-hidden">
-                {user?.photoURL ? (
+                {user ? (
                   <img className="my-anchor-element w-full h-full object-cover" src={user?.photoURL} alt="User" />
                 ) : (
                   <img className="my-anchor-element w-full h-full object-cover" src="https://i.ibb.co.com/qLWkbpCH/photourl.png" alt="Default" />

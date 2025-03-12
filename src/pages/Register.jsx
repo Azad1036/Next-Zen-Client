@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { use, useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaGithub, FaGoogle, FaTwitter } from "react-icons/fa";
 import { IoIosEyeOff, IoMdEye } from "react-icons/io";
@@ -15,6 +15,7 @@ const Register = () => {
     twitterLogin,
     setUser,
     theme,
+    updateUserProfile,
   } = useContext(MainContextProviderContext);
   const navigate = useNavigate();
 
@@ -25,14 +26,25 @@ const Register = () => {
   } = useForm();
 
   const handleRegisterForm = (data) => {
-    const { email, password } = data;
+    const { fullName, photoURL, email, password } = data;
 
     createNewAccount(email, password)
       .then((result) => {
         const user = result.user;
         setUser(user);
         navigate("/");
-        if (user) toast.success("You have successfully registered!");
+        updateUserProfile({
+          displayName: fullName,
+          photoURL: photoURL,
+        })
+          .then(() => {
+            toast.success("You have successfully registered!");
+            navigate("/");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        // if (user) toast.success("You have successfully registered!");
       })
       .catch(() => {
         toast.error("Email Already Used");
@@ -142,6 +154,20 @@ const Register = () => {
             />
           </div>
 
+          <div className="mb-4">
+            <label className="block font-medium mb-1">Photo Url</label>
+            <input
+              type="url"
+              className={`w-full p-2 bg-transparent border-b-2 outline-none transition-all duration-300 placeholder-gray-400 ${
+                theme === "synthwave"
+                  ? "border-gray-500 focus:border-purple-400 text-white"
+                  : "border-gray-300 focus:border-indigo-500 text-gray-900"
+              }`}
+              placeholder="Enter your PhotoUrl"
+              required
+              {...register("photoURL")}
+            />
+          </div>
           <div className="mb-4 relative">
             <label className="block font-medium mb-1">Password</label>
             <input

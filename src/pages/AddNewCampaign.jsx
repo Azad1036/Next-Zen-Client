@@ -5,6 +5,7 @@ import { MainContextProviderContext } from "../provider/AuthProvider";
 
 const AddNewCampaign = () => {
   const { user, theme } = useContext(MainContextProviderContext);
+  console.log(user);
   const [userName, setUserName] = useState("Not Found");
   const [loading, setLoading] = useState(false);
 
@@ -22,14 +23,15 @@ const AddNewCampaign = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setLoading(false); 
+        setLoading(false);
+
         if (data.insertedId) {
           Swal.fire({
             title: "Success!",
             text: "Your campaign has been added.",
             icon: "success",
           });
-          reset(); 
+          reset();
         } else {
           Swal.fire({
             icon: "error",
@@ -66,7 +68,9 @@ const AddNewCampaign = () => {
         <form onSubmit={handleSubmit(handleAddCampaignForm)}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
-              <label className="block font-medium mb-2">Image/Thumbnail URL</label>
+              <label className="block font-medium mb-2">
+                Image/Thumbnail URL
+              </label>
               <input
                 {...register("photoUrl")}
                 type="url"
@@ -108,7 +112,9 @@ const AddNewCampaign = () => {
                 }`}
                 required
               >
-                <option value="" disabled>Select campaign type</option>
+                <option value="" disabled>
+                  Select campaign type
+                </option>
                 <option value="personal issue">Personal Issue</option>
                 <option value="startup">Startup</option>
                 <option value="business">Business</option>
@@ -117,7 +123,9 @@ const AddNewCampaign = () => {
             </div>
 
             <div>
-              <label className="block font-medium mb-2">Minimum Donation Amount</label>
+              <label className="block font-medium mb-2">
+                Minimum Donation Amount
+              </label>
               <input
                 type="number"
                 {...register("donationAmount")}
@@ -166,7 +174,7 @@ const AddNewCampaign = () => {
               <label className="block font-medium mb-2">User Email</label>
               <input
                 {...register("email")}
-                defaultValue={user?.email}
+                defaultValue={user.email}
                 readOnly
                 type="email"
                 className="w-full p-3 bg-gray-200 border border-gray-300 rounded-md text-gray-600"

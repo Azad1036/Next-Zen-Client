@@ -7,6 +7,7 @@ import {
   signInWithPopup,
   signOut,
   TwitterAuthProvider,
+  updateProfile,
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import auth from "../firebase/firebase";
@@ -27,13 +28,13 @@ const AuthProvider = ({ children }) => {
 
   // Create New Account
   const createNewAccount = (email, password) => {
-    setLoading(true)
+    setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
   // Login User
   const LoginAccount = (email, password) => {
-    setLoading(true)
+    setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
   //Google Login
@@ -49,6 +50,11 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, twitterProvider);
   };
 
+  // Update Profile
+  const updateUserProfile = (updateData) => {
+    return updateProfile(auth.currentUser, updateData);
+  };
+
   // SignOut User
   const signOutUser = () => {
     return signOut(auth);
@@ -62,11 +68,11 @@ const AuthProvider = ({ children }) => {
     setTheme,
     createNewAccount,
     LoginAccount,
+    updateUserProfile,
     signOutUser,
     googleLogin,
     githubLogin,
     twitterLogin,
-
   };
 
   // user Store
