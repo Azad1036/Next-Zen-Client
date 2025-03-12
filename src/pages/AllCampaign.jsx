@@ -1,15 +1,32 @@
 import { Link, useLoaderData } from "react-router-dom";
+import { useContext } from "react";
+import { MainContextProviderContext } from "../provider/AuthProvider";
 
 const AllCampaign = () => {
   const data = useLoaderData();
+  const { theme } = useContext(MainContextProviderContext);
 
   return (
-    <div className="font-ibm-plex">
-      <div className="container mx-auto py-10">
-        <div className="overflow-x-auto rounded-lg">
-          <table className="min-w-full bg-white border border-gray-200 rounded-lg">
+    <div
+      className={`font-ibm-plex min-h-screen py-10 transition-colors duration-500 ${
+        theme === "synthwave" ? " text-white" : "bg-gray-100 text-gray-900"
+      }`}
+    >
+      <div className="container mx-auto">
+        <div className="overflow-x-auto rounded-lg shadow-lg">
+          <table
+            className={`min-w-full border border-gray-200 rounded-lg ${
+              theme === "synthwave" ? "bg-[#2D2D44]" : "bg-white"
+            }`}
+          >
             <thead>
-              <tr className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
+              <tr
+                className={`text-white ${
+                  theme === "synthwave"
+                    ? "bg-gradient-to-r from-purple-700 to-pink-600"
+                    : "bg-gradient-to-r from-indigo-600 to-purple-600"
+                }`}
+              >
                 <th className="px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider">
                   Number
                 </th>
@@ -31,24 +48,30 @@ const AllCampaign = () => {
               {data.map((campaign, index) => (
                 <tr
                   key={campaign._id}
-                  className="bg-gray-50 hover:bg-gray-100 transition duration-300"
+                  className={`hover:scale-101 transition duration-300 ${
+                    theme === "synthwave" ? "bg-[#1E1E2E] hover:bg-[#2D2D44]" : "bg-gray-50 hover:bg-gray-100"
+                  }`}
                 >
-                  <td className="px-6 py-4 border-b border-gray-300 text-gray-800 font-medium">
+                  <td className="px-6 py-4 border-b border-gray-300 font-medium">
                     {index + 1}
                   </td>
-                  <td className="px-6 py-4 border-b border-gray-300 text-gray-800">
+                  <td className="px-6 py-4 border-b border-gray-300">
                     {campaign.compaignTitle}
                   </td>
-                  <td className="px-6 py-4 border-b border-gray-300 text-gray-800">
+                  <td className="px-6 py-4 border-b border-gray-300">
                     {campaign.compaignType}
                   </td>
-                  <td className="px-6 py-4 border-b border-gray-300 text-gray-800">
+                  <td className="px-6 py-4 border-b border-gray-300">
                     {campaign.date}
                   </td>
-                  <td className="px-6 py-4 border-b border-gray-300">
+                  <td className="px-6 py-4 border-b border-gray-300 text-left">
                     <Link
                       to={`/campaign/${campaign._id}`}
-                      className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-4 py-2 rounded-lg shadow-md hover:scale-105 transition duration-300"
+                      className={`px-4 py-2 rounded-lg shadow-md transition-all font-semibold ${
+                        theme === "synthwave"
+                          ? "bg-purple-600 hover:bg-purple-800 text-white"
+                          : "bg-indigo-500 hover:bg-indigo-700 text-white"
+                      }`}
                     >
                       See More
                     </Link>

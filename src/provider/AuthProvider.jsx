@@ -23,6 +23,7 @@ const twitterProvider = new TwitterAuthProvider();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [theme, setTheme] = useState("light");
 
   // Create New Account
   const createNewAccount = (email, password) => {
@@ -57,12 +58,15 @@ const AuthProvider = ({ children }) => {
     user,
     setUser,
     loading,
+    theme,
+    setTheme,
     createNewAccount,
     LoginAccount,
     signOutUser,
     googleLogin,
     githubLogin,
     twitterLogin,
+
   };
 
   // user Store

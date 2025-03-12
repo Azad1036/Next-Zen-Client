@@ -1,19 +1,23 @@
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { FaGithub, FaGoogle } from "react-icons/fa";
+import { FaGithub, FaGoogle, FaTwitter } from "react-icons/fa";
 import { IoIosEyeOff, IoMdEye } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { MainContextProviderContext } from "../provider/AuthProvider";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { createNewAccount, googleLogin, githubLogin, twitterLogin, setUser } =
-    useContext(MainContextProviderContext);
-    const navigate = useNavigate()
+  const {
+    createNewAccount,
+    googleLogin,
+    githubLogin,
+    twitterLogin,
+    setUser,
+    theme,
+  } = useContext(MainContextProviderContext);
+  const navigate = useNavigate();
 
-  // User Data
   const {
     handleSubmit,
     register,
@@ -21,22 +25,17 @@ const Register = () => {
   } = useForm();
 
   const handleRegisterForm = (data) => {
-    const { fullName, photoUrl, email, password } = data;
+    const { email, password } = data;
 
     createNewAccount(email, password)
       .then((result) => {
         const user = result.user;
-        setUser(user)
-        navigate("/")
-        {
-          user && toast.success("You have successfully registered!");
-        }
+        setUser(user);
+        navigate("/");
+        if (user) toast.success("You have successfully registered!");
       })
-      .catch((error) => {
-        const errorMessage = error.message;
-        {
-          errorMessage && toast.error("Email Already Used");
-        }
+      .catch(() => {
+        toast.error("Email Already Used");
       });
   };
 
@@ -93,55 +92,65 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen font-ibm-plex flex items-center justify-center bg-gray-50 p-4">
-      <div className="relative bg-white p-6 rounded-2xl shadow-lg w-full max-w-md border border-gray-200 transition-all duration-500 hover:shadow-indigo-500/50">
-        <h2 className="text-2xl font-bold text-center text-indigo-600 mb-4 font-montserrat">
+    <div
+      className={`min-h-screen font-ibm-plex flex items-center justify-center p-4 transition-all duration-500 ${
+        theme === "synthwave" ? " text-white" : "bg-gray-50 text-gray-900"
+      }`}
+    >
+      <div
+        className={`relative p-6 rounded-2xl shadow-lg w-full max-w-md border transition-all duration-500 hover:shadow-lg ${
+          theme === "synthwave"
+            ? "bg-[#2D2D44] border-gray-700"
+            : "bg-white border-gray-200"
+        }`}
+      >
+        <h2
+          className={`text-2xl font-bold text-center mb-4 font-montserrat ${
+            theme === "synthwave" ? "text-purple-400" : "text-indigo-600"
+          }`}
+        >
           Register
         </h2>
 
         <form onSubmit={handleSubmit(handleRegisterForm)}>
           <div className="mb-4">
-            <label className="block text-gray-600 font-medium mb-1">
-              Full Name
-            </label>
+            <label className="block font-medium mb-1">Full Name</label>
             <input
               type="text"
-              className="w-full p-2 bg-transparent border-b-2 border-gray-300 focus:border-indigo-500 outline-none transition-all duration-300 placeholder-gray-400"
+              className={`w-full p-2 bg-transparent border-b-2 outline-none transition-all duration-300 placeholder-gray-400 ${
+                theme === "synthwave"
+                  ? "border-gray-500 focus:border-purple-400 text-white"
+                  : "border-gray-300 focus:border-indigo-500 text-gray-900"
+              }`}
               placeholder="Enter your full name"
               {...register("fullName")}
             />
           </div>
+
           <div className="mb-4">
-            <label className="block text-gray-600 font-medium mb-1">
-              Email
-            </label>
+            <label className="block font-medium mb-1">Email</label>
             <input
               type="email"
-              className="w-full p-2 bg-transparent border-b-2 border-gray-300 focus:border-indigo-500 outline-none transition-all duration-300 placeholder-gray-400"
+              className={`w-full p-2 bg-transparent border-b-2 outline-none transition-all duration-300 placeholder-gray-400 ${
+                theme === "synthwave"
+                  ? "border-gray-500 focus:border-purple-400 text-white"
+                  : "border-gray-300 focus:border-indigo-500 text-gray-900"
+              }`}
               placeholder="Enter your email"
               required
               {...register("email")}
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-600 font-medium mb-1">
-              Photo Url
-            </label>
-            <input
-              type="text"
-              className="w-full p-2 bg-transparent border-b-2 border-gray-300 focus:border-indigo-500 outline-none transition-all duration-300 placeholder-gray-400"
-              placeholder="Enter your photo url"
-              {...register("photoUrl")}
-            />
-          </div>
 
           <div className="mb-4 relative">
-            <label className="block text-gray-600 font-medium mb-1">
-              Password
-            </label>
+            <label className="block font-medium mb-1">Password</label>
             <input
               type={showPassword ? "text" : "password"}
-              className="w-full p-2 bg-transparent border-b-2 border-gray-300 focus:border-indigo-500 outline-none transition-all duration-300 placeholder-gray-400"
+              className={`w-full p-2 bg-transparent border-b-2 outline-none transition-all duration-300 placeholder-gray-400 ${
+                theme === "synthwave"
+                  ? "border-gray-500 focus:border-purple-400 text-white"
+                  : "border-gray-300 focus:border-indigo-500 text-gray-900"
+              }`}
               placeholder="Enter your password"
               {...register("password", {
                 required: "Password is required",
@@ -164,7 +173,7 @@ const Register = () => {
             )}
             <div
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute top-10 right-2 cursor-pointer text-gray-600 hover:text-indigo-600 transition-colors duration-300"
+              className="absolute top-10 right-2 cursor-pointer hover:text-indigo-500 transition-colors duration-300"
             >
               {showPassword ? <IoMdEye size={20} /> : <IoIosEyeOff size={20} />}
             </div>
@@ -172,7 +181,11 @@ const Register = () => {
 
           <button
             type="submit"
-            className="relative w-full bg-indigo-600 text-white py-2.5 rounded-lg font-semibold overflow-hidden group hover:bg-indigo-700 transition-all duration-300 hover:shadow-indigo-500/50 hover:scale-105 active:scale-95"
+            className={`relative w-full py-2.5 rounded-lg font-semibold overflow-hidden group transition-all duration-300 active:scale-95 ${
+              theme === "synthwave"
+                ? "bg-purple-600 hover:bg-purple-700 text-white shadow-lg hover:shadow-purple-500/50"
+                : "bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg hover:shadow-indigo-500/50"
+            }`}
           >
             <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-20 transform -translate-x-full group-hover:animate-shine"></span>
             Register
@@ -180,35 +193,58 @@ const Register = () => {
         </form>
 
         <div className="mt-4 text-center">
-          <p className="text-gray-600 mb-2 font-poppins">
-            Other Login in System
-          </p>
+          <p className="mb-2 font-poppins">Other Login Options</p>
           <div className="flex justify-center gap-3 mb-4">
             <button
-              className="relative w-12 h-12 flex items-center justify-center bg-red-500 text-white rounded-full group overflow-hidden hover:bg-red-600 transition-all duration-300 hover:shadow-red-400/50 hover:scale-110"
               onClick={handleGoogleLogin}
+              className="w-12 h-12 flex items-center justify-center rounded-full group overflow-hidden transition-all duration-300 hover:scale-110 shadow-lg"
+              style={{
+                backgroundColor: theme === "synthwave" ? "#E4405F" : "#DB4437",
+                color: "white",
+                boxShadow:
+                  theme === "synthwave"
+                    ? "0px 4px 10px rgba(228, 64, 95, 0.5)"
+                    : "0px 4px 10px rgba(219, 68, 55, 0.5)",
+              }}
             >
               <FaGoogle size={20} />
             </button>
             <button
               onClick={handleGithubLogin}
-              className="relative w-12 h-12 flex items-center justify-center bg-gray-800 text-white rounded-full group overflow-hidden hover:bg-gray-900 transition-all duration-300 hover:shadow-gray-500/50 hover:scale-110"
+              className="w-12 h-12 flex items-center justify-center rounded-full group overflow-hidden transition-all duration-300 hover:scale-110 shadow-lg"
+              style={{
+                backgroundColor: theme === "synthwave" ? "#E4405F" : "#DB4437",
+                color: "white",
+                boxShadow:
+                  theme === "synthwave"
+                    ? "0px 4px 10px rgba(228, 64, 95, 0.5)"
+                    : "0px 4px 10px rgba(219, 68, 55, 0.5)",
+              }}
             >
               <FaGithub size={20} />
             </button>
             <button
               onClick={handleTwitterLogin}
-              className="relative w-12 h-12 flex items-center justify-center bg-gray-800 text-white rounded-full group overflow-hidden hover:bg-gray-900 transition-all duration-300 hover:shadow-gray-500/50 hover:scale-110"
+              className="w-12 h-12 flex items-center justify-center rounded-full 
+              transition-all duration-300 hover:scale-110 shadow-lg"
+              style={{
+                backgroundColor: "#1DA1F2", // Twitter Official Blue
+                color: "white",
+                boxShadow: "0px 4px 10px rgba(29, 161, 242, 0.5)", // Light blue shadow
+              }}
             >
-              <FaGithub size={20} />
+              <FaTwitter size={20} />
             </button>
           </div>
           <Link
             to="/login"
-            className="text-gray-600 hover:text-indigo-600 transition-colors"
+            className="transition-colors"
+            style={{
+              color: theme === "synthwave" ? "#BB86FC" : "#4F46E5",
+              fontWeight: "600",
+            }}
           >
-            Already have an account?
-            <span className="font-semibold text-indigo-600">Login</span>
+            Already have an account? <span className="underline">Login</span>
           </Link>
         </div>
       </div>

@@ -1,7 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 @import "tailwindcss";
-@plugin "daisyui";
+
+@plugin "daisyui" {
+  themes: light --default, synthwave;
+}
 
 @theme {
   --font-poppins: "Poppins", sans-serif;
@@ -9,14 +12,3 @@
   --font-ibm-plex: "IBM Plex Sans", sans-serif;
 }
 
-
-/* গ্রেডিয়েন্ট রিং */
-.focus\:ring-gradient {
-  --tw-ring-color: transparent;
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0), inset 0 0 10px rgba(34, 211, 238, 0.5), inset 0 0 10px rgba(236, 72, 153, 0.5);
-}
-
-/* নিয়ন গ্লো টেক্সট */
-.animate-neon-flicker {
-  animation: neonFlicker 1.5s infinite;
-}
