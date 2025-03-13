@@ -2,18 +2,30 @@ import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { MainContextProviderContext } from "../provider/AuthProvider";
+import { useLoaderData } from "react-router-dom";
 
 const UpdateCampaign = () => {
+  const UpdateCampaignData = useLoaderData();
+
   const { user, theme } = useContext(MainContextProviderContext);
   const [userName, setUserName] = useState("Not Found");
-  const [loading, setLoading] = useState(false);
+
+  const {
+    campaignTitle,
+    campaignType,
+    date,
+    description,
+    donationAmount,
+    photoUrl,
+  } = UpdateCampaignData;
 
   // React Hook Form
   const { handleSubmit, register, reset } = useForm();
 
   const handleUpdateCampaignForm = (data) => {
-    setLoading(true);
-    fetch("http://localhost:4000/updateCampaign", {
+
+
+    fetch(`http://localhost:4000/updateCampaign/${UpdateCampaignData._id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -22,7 +34,6 @@ const UpdateCampaign = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setLoading(false);
         if (data.modifiedCount > 0) {
           Swal.fire({
             title: "Success!",
@@ -66,9 +77,12 @@ const UpdateCampaign = () => {
         <form onSubmit={handleSubmit(handleUpdateCampaignForm)}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
-              <label className="block font-medium mb-2">Image/Thumbnail URL</label>
+              <label className="block font-medium mb-2">
+                Image/Thumbnail URL
+              </label>
               <input
                 {...register("photoUrl")}
+                defaultValue={photoUrl}
                 type="url"
                 className="w-full p-3 rounded-md border focus:ring focus:ring-indigo-200 transition"
                 placeholder="Enter image URL"
@@ -80,6 +94,7 @@ const UpdateCampaign = () => {
               <label className="block font-medium mb-2">Campaign Title</label>
               <input
                 type="text"
+                defaultValue={campaignTitle}
                 {...register("campaignTitle")}
                 className="w-full p-3 rounded-md border focus:ring focus:ring-indigo-200 transition"
                 placeholder="Enter campaign title"
@@ -91,8 +106,15 @@ const UpdateCampaign = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
               <label className="block font-medium mb-2">Campaign Type</label>
-              <select {...register("campaignType")} className="w-full p-3 rounded-md border focus:ring focus:ring-indigo-200 transition" required>
-                <option value="" disabled>Select campaign type</option>
+              <select
+                defaultValue={campaignType}
+                {...register("campaignType")}
+                className="w-full p-3 rounded-md border focus:ring focus:ring-indigo-200 transition"
+                required
+              >
+                <option value="" disabled>
+                  Select campaign type
+                </option>
                 <option value="personal issue">Personal Issue</option>
                 <option value="startup">Startup</option>
                 <option value="business">Business</option>
@@ -101,9 +123,12 @@ const UpdateCampaign = () => {
             </div>
 
             <div>
-              <label className="block font-medium mb-2">Minimum Donation Amount</label>
+              <label className="block font-medium mb-2">
+                Minimum Donation Amount
+              </label>
               <input
                 type="number"
+                defaultValue={donationAmount}
                 {...register("donationAmount")}
                 className="w-full p-3 rounded-md border focus:ring focus:ring-indigo-200 transition"
                 placeholder="Minimum donation $50"
@@ -115,6 +140,7 @@ const UpdateCampaign = () => {
           <div className="mb-6">
             <label className="block font-medium mb-2">Description</label>
             <textarea
+              defaultValue={description}
               {...register("description")}
               className="w-full p-3 rounded-md border focus:ring focus:ring-indigo-200 transition"
               placeholder="Enter campaign description"
@@ -126,30 +152,43 @@ const UpdateCampaign = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
               <label className="block font-medium mb-2">Deadline</label>
-              <input type="date" {...register("date")} className="w-full p-3 rounded-md border focus:ring focus:ring-indigo-200 transition" required />
+              <input
+                type="date"
+                defaultValue={date}
+                {...register("date")}
+                className="w-full p-3 rounded-md border focus:ring focus:ring-indigo-200 transition"
+                required
+              />
             </div>
 
             <div>
               <label className="block font-medium mb-2">User Email</label>
-              <input {...register("email")} defaultValue={user?.email} readOnly type="email" className="w-full p-3 bg-gray-200 border border-gray-300 rounded-md text-gray-600" />
+              <input
+                // {...register("email")}
+                defaultValue={user?.email}
+                readOnly
+                type="email"
+                className="w-full p-3 bg-gray-200 border border-gray-300 rounded-md text-gray-600"
+              />
             </div>
           </div>
 
           <div className="mb-8">
             <label className="block font-medium mb-2">User Name</label>
-            <input {...register("userName")} value={userName} readOnly type="text" className="w-full p-3 bg-gray-200 border border-gray-300 rounded-md text-gray-600" />
+            <input
+              // {...register("userName")}
+              value={userName}
+              readOnly
+              type="text"
+              className="w-full p-3 bg-gray-200 border border-gray-300 rounded-md text-gray-600"
+            />
           </div>
 
           <button
             type="submit"
-            className={`relative w-full py-3 rounded-lg font-semibold shadow-lg transition-all duration-300 text-white ${
-              loading
-                ? "bg-gray-500 cursor-not-allowed"
-                : "bg-gradient-to-r from-indigo-500 to-pink-500 hover:shadow-[0_0_15px_rgba(99,102,241,0.7)] hover:scale-105"
-            }`}
-            disabled={loading}
+            className="relative w-full py-3 rounded-lg font-semibold shadow-lg transition-all duration-300 text-white bg-gradient-to-r from-indigo-500 to-pink-500 hover:shadow-[0_0_15px_rgba(99,102,241,0.7)] hover:scale-105"
           >
-            {loading ? "Updating Campaign..." : "Update Campaign"}
+            Update Campaign
           </button>
         </form>
       </div>

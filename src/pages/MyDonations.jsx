@@ -4,6 +4,7 @@ import MyDonationlist from "./MyDonationlist";
 
 const MyDonations = () => {
   const [myDonationsitem, setMyCampaignData] = useState([]);
+  console.log(myDonationsitem);
   const { user } = useContext(MainContextProviderContext);
 
   useEffect(() => {

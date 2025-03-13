@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaGithub, FaGoogle, FaTwitter } from "react-icons/fa";
 import { IoIosEyeOff, IoMdEye } from "react-icons/io";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { MainContextProviderContext } from "../provider/AuthProvider";
 
@@ -17,6 +17,7 @@ const Login = () => {
     twitterLogin,
   } = useContext(MainContextProviderContext);
   const navigate = useNavigate();
+  const location = useLocation();
   const { handleSubmit, register } = useForm();
 
   const handleLoginForm = (data) => {
@@ -26,8 +27,8 @@ const Login = () => {
       .then((result) => {
         const user = result.user;
         setUser(user);
-        navigate("/");
-        if (user) toast.success("You have successfully logged in!");
+        toast.success("You have successfully logged in!");
+        navigate(location?.state ? location.state : "/");
       })
       .catch(() => {
         toast.error("Email or Password is incorrect");
@@ -42,6 +43,7 @@ const Login = () => {
         {
           user && toast.success("You have successfully registered!");
         }
+        navigate("/");
       })
       .catch((err) => {
         const errorMessage = err.message;
@@ -59,6 +61,7 @@ const Login = () => {
         {
           user && toast.success("You have successfully registered!");
         }
+        navigate("/");
       })
       .catch((err) => {
         const errorMessage = err.message;
@@ -82,7 +85,7 @@ const Login = () => {
         {
           errorMessage && toast.error("Pls try again");
         }
-        console.log(err);
+        navigate("/");
       });
   };
 

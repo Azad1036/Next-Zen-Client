@@ -2,7 +2,6 @@ import { useEffect, useContext } from "react";
 import { MainContextProviderContext } from "../provider/AuthProvider";
 
 const Theme = () => {
-  //   const [theme, setTheme] = useState("light");
   const { theme, setTheme } = useContext(MainContextProviderContext);
 
   useEffect(() => {
@@ -11,6 +10,7 @@ const Theme = () => {
 
   const toggleTheme = () => {
     setTheme(theme === "synthwave" ? "light" : "synthwave");
+    
   };
 
   return (

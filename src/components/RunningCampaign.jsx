@@ -4,15 +4,23 @@ import { MainContextProviderContext } from "../provider/AuthProvider";
 
 const RunningCampaign = () => {
   const [campaigns, setCampaigns] = useState([]);
-  const { theme } = useContext(MainContextProviderContext);
-
+  const { theme, user } = useContext(MainContextProviderContext);
+  
   useEffect(() => {
-    
     fetch("http://localhost:4000/runningCampaigns")
       .then((res) => res.json())
       .then((data) => {
+        // Get today's date (March 13, 2025) and set time to midnight for accurate comparison
+        const today = new Date('2025-03-13');
+        today.setHours(0, 0, 0, 0);
+
+        // Filter campaigns where item.date is >= today
+        const filteredData = data.filter(item => {
+          const itemDate = new Date(item.date); // Assuming your data has a 'date' property
+          return itemDate >= today;
+        });
         
-        setCampaigns(data);
+        setCampaigns(filteredData); // Set the filtered data instead of raw data
       })
       .catch((error) => console.error("Error fetching campaigns:", error));
   }, []);
@@ -21,71 +29,72 @@ const RunningCampaign = () => {
     <div
       className={`container mx-auto p-6 transition-colors duration-500 rounded-xl ${
         theme === "synthwave"
-          ? "bg-[#1C1C2E] text-white"
+          ? " text-white"
           : "bg-[#FDFDFD] text-gray-900"
       }`}
     >
-      <h2 className="text-3xl font-bold text-center mb-10">
-        Running Campaigns
+      <h2 className="text-4xl font-bold text-center mb-12 tracking-wide">
+        🔥 Running Campaigns 🔥
       </h2>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {campaigns.map((campaign) => (
           <div
             key={campaign._id}
-            className={`border p-6 rounded-lg shadow-xl flex flex-col justify-between ${
-              theme === "synthwave" ? "bg-[#2D2D44]" : "bg-white"
+            className={`rounded-xl shadow-lg hover:shadow-2xl p-6 flex flex-col transition-transform duration-300 ${
+              theme === "synthwave"
+                ? "bg-[#2D2D44] hover:bg-[#353553]"
+                : "bg-white hover:bg-gray-100"
             }`}
           >
             <img
               src={campaign.photoUrl}
-              alt={campaign.compaignTitle}
-              className="w-full h-44 object-cover rounded-lg"
+              alt={campaign.campaignTitle}
+              className="w-full h-48 object-cover rounded-lg"
             />
-            <div className="flex-grow mt-4">
-              <h3 className="text-xl font-semibold">
-                {campaign.compaignTitle}
+            <div className="flex-grow mt-4 space-y-2">
+              <h3 className="text-2xl font-semibold">
+                {campaign.campaignTitle}
               </h3>
-              <p className="text-gray-500 mt-2">{campaign.description}</p>
-              <p className="text-blue-400 font-medium mt-2">
-                Type: {campaign.compaignType}
+              <p className="text-gray-500">{campaign.description}</p>
+              <p className="text-blue-400 font-medium">
+                Type: {campaign.campaignType}
               </p>
               <p className="text-green-500 font-bold">
                 Min Donation: ${campaign.donationAmount}
               </p>
-              <p className="text-gray-400 text-sm mt-2">
-                By: {campaign.userName} ({campaign.email})
+              <p className="text-gray-400 text-sm">
+                By: {user?.displayName} 
               </p>
               <p className="text-gray-400 text-sm">Deadline: {campaign.date}</p>
             </div>
-            <div className="mt-5 flex justify-start">
-              {" "}
-              {/* বাম পাশে সরানো হলো */}
+
+            <div className="mt-5">
               <Link
                 to={`/campaign/${campaign._id}`}
-                className={`px-5 py-2 rounded-lg font-semibold transition-all ${
+                className={`px-6 py-3 rounded-lg font-semibold block text-center transition-all ${
                   theme === "synthwave"
                     ? "bg-purple-600 hover:bg-purple-800 text-white"
                     : "bg-blue-600 hover:bg-blue-800 text-white"
                 }`}
               >
-                See More
+                🎯 See More
               </Link>
             </div>
           </div>
         ))}
       </div>
-      <div className="text-center mt-10">
-        {" "}
-        {/* এইটাও বাম পাশে সরানো হলো */}
+
+      <div className="text-center mt-12">
         <Link
           to={"/allCampaign"}
-          className={`px-8 py-3 rounded-lg font-semibold transition-all shadow-md ${
+          className={`px-10 py-3 rounded-lg font-semibold shadow-md transition-all text-lg ${
             theme === "synthwave"
               ? "bg-purple-600 hover:bg-purple-800 text-white"
               : "bg-blue-600 hover:bg-blue-800 text-white"
           }`}
         >
-          See More Campaigns
+          🔍 Explore More Campaigns
         </Link>
       </div>
     </div>

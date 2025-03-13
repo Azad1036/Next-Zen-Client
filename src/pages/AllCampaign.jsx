@@ -9,13 +9,13 @@ const AllCampaign = () => {
   return (
     <div
       className={`font-ibm-plex min-h-screen py-10 transition-colors duration-500 ${
-        theme === "synthwave" ? " text-white" : "bg-gray-100 text-gray-900"
+        theme === "synthwave" ? "text-white" : "bg-gray-100 text-gray-900"
       }`}
     >
-      <div className="container mx-auto">
+      <div className="container mx-auto px-4">
         <div className="overflow-x-auto rounded-lg shadow-lg">
           <table
-            className={`min-w-full border border-gray-200 rounded-lg ${
+            className={`min-w-full border border-gray-200 rounded-lg table-auto ${
               theme === "synthwave" ? "bg-[#2D2D44]" : "bg-white"
             }`}
           >
@@ -49,25 +49,27 @@ const AllCampaign = () => {
                 <tr
                   key={campaign._id}
                   className={`hover:scale-101 transition duration-300 ${
-                    theme === "synthwave" ? "bg-[#1E1E2E] hover:bg-[#2D2D44]" : "bg-gray-50 hover:bg-gray-100"
+                    theme === "synthwave"
+                      ? "bg-[#1E1E2E] hover:bg-[#2D2D44]"
+                      : "bg-gray-50 hover:bg-gray-100"
                   }`}
                 >
-                  <td className="px-6 py-4 border-b border-gray-300 font-medium">
+                  <td className="px-6 py-4 border-b border-gray-300 font-medium whitespace-nowrap">
                     {index + 1}
                   </td>
-                  <td className="px-6 py-4 border-b border-gray-300">
-                    {campaign.compaignTitle}
+                  <td className="px-6 py-4 border-b border-gray-300 whitespace-nowrap">
+                    {campaign.campaignTitle}
                   </td>
-                  <td className="px-6 py-4 border-b border-gray-300">
-                    {campaign.compaignType}
+                  <td className="px-6 py-4 border-b border-gray-300 whitespace-nowrap">
+                    {campaign.campaignType}
                   </td>
-                  <td className="px-6 py-4 border-b border-gray-300">
+                  <td className="px-6 py-4 border-b border-gray-300 whitespace-nowrap">
                     {campaign.date}
                   </td>
                   <td className="px-6 py-4 border-b border-gray-300 text-left">
                     <Link
                       to={`/campaign/${campaign._id}`}
-                      className={`px-4 py-2 rounded-lg shadow-md transition-all font-semibold ${
+                      className={`inline-block px-4 py-2 rounded-lg shadow-md transition-all font-semibold text-center w-full sm:w-auto ${
                         theme === "synthwave"
                           ? "bg-purple-600 hover:bg-purple-800 text-white"
                           : "bg-indigo-500 hover:bg-indigo-700 text-white"

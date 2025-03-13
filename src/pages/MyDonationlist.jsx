@@ -5,9 +5,11 @@ const MyDonationlist = ({ myDonationsitem }) => {
   const { theme } = useContext(MainContextProviderContext);
 
   return (
-    <div className={`max-w-4xl mx-auto py-10 transition-all duration-500 ${
-      theme === "synthwave" ? " text-white" : " text-gray-900"
-    }`}>
+    <div
+      className={`max-w-4xl mx-auto py-10 transition-all duration-500 ${
+        theme === "synthwave" ? " text-white" : " text-gray-900"
+      }`}
+    >
       <h2 className="text-2xl font-bold text-center mb-6">My Donations</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {myDonationsitem.length > 0 ? (
@@ -20,11 +22,13 @@ const MyDonationlist = ({ myDonationsitem }) => {
                   : "bg-white border-gray-200 hover:bg-gray-50"
               }`}
             >
-              <h3 className="text-xl font-semibold">{campaign?.data?.compaignTitle}</h3>
+              <h3 className="text-xl font-semibold">
+                {campaign?.campaignTitle}
+              </h3>
               <p className="text-gray-600">
-                Amount Donated: <strong>${campaign?.data?.donationAmount}</strong>
+                Amount Donated: <strong>${campaign?.donationAmount}</strong>
               </p>
-              <p className="text-gray-500 text-sm">Date: {campaign?.data?.date}</p>
+              <p className="text-gray-500 text-sm">Date: {campaign?.date}</p>
             </div>
           ))
         ) : (

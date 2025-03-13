@@ -5,15 +5,13 @@ import { MainContextProviderContext } from "../provider/AuthProvider";
 
 const AddNewCampaign = () => {
   const { user, theme } = useContext(MainContextProviderContext);
-  console.log(user);
   const [userName, setUserName] = useState("Not Found");
-  const [loading, setLoading] = useState(false);
+
 
   // React Hook Form
   const { handleSubmit, register, reset } = useForm();
 
   const handleAddCampaignForm = (data) => {
-    setLoading(true);
     fetch("http://localhost:4000/addCampaign", {
       method: "POST",
       headers: {
@@ -23,7 +21,7 @@ const AddNewCampaign = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setLoading(false);
+  
 
         if (data.insertedId) {
           Swal.fire({
@@ -88,7 +86,7 @@ const AddNewCampaign = () => {
               <label className="block font-medium mb-2">Campaign Title</label>
               <input
                 type="text"
-                {...register("compaignTitle")}
+                {...register("campaignTitle")}
                 className={`w-full p-3 rounded-md border focus:ring focus:ring-indigo-200 transition ${
                   theme === "synthwave"
                     ? "bg-[#1E1E2E] border-gray-500 placeholder-gray-400 text-white"
@@ -104,7 +102,7 @@ const AddNewCampaign = () => {
             <div>
               <label className="block font-medium mb-2">Campaign Type</label>
               <select
-                {...register("compaignType")}
+                {...register("campaignType")}
                 className={`w-full p-3 rounded-md border focus:ring focus:ring-indigo-200 transition ${
                   theme === "synthwave"
                     ? "bg-[#1E1E2E] border-gray-500 text-white"
@@ -195,14 +193,9 @@ const AddNewCampaign = () => {
 
           <button
             type="submit"
-            className={`relative w-full py-3 rounded-lg font-semibold shadow-lg transition-all duration-300 text-white ${
-              loading
-                ? "bg-gray-500 cursor-not-allowed"
-                : "bg-gradient-to-r from-indigo-500 to-pink-500 hover:shadow-[0_0_15px_rgba(99,102,241,0.7)] hover:scale-105"
-            }`}
-            disabled={loading}
+            className="relative w-full py-3 rounded-lg font-semibold shadow-lg transition-all duration-300 text-white bg-gradient-to-r from-indigo-500 to-pink-500 hover:shadow-[0_0_15px_rgba(99,102,241,0.7)] hover:scale-105"
           >
-            {loading ? "Adding Campaign..." : "Add Campaign"}
+            Add Campaign
           </button>
         </form>
       </div>

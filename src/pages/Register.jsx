@@ -1,4 +1,4 @@
-import { use, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaGithub, FaGoogle, FaTwitter } from "react-icons/fa";
 import { IoIosEyeOff, IoMdEye } from "react-icons/io";
@@ -8,6 +8,8 @@ import { MainContextProviderContext } from "../provider/AuthProvider";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+
   const {
     createNewAccount,
     googleLogin,
@@ -17,7 +19,6 @@ const Register = () => {
     theme,
     updateUserProfile,
   } = useContext(MainContextProviderContext);
-  const navigate = useNavigate();
 
   const {
     handleSubmit,
@@ -44,7 +45,6 @@ const Register = () => {
           .catch((err) => {
             console.log(err);
           });
-        // if (user) toast.success("You have successfully registered!");
       })
       .catch(() => {
         toast.error("Email Already Used");
@@ -59,6 +59,7 @@ const Register = () => {
         {
           user && toast.success("You have successfully registered!");
         }
+        navigate("/");
       })
       .catch((err) => {
         const errorMessage = err.message;
@@ -76,6 +77,7 @@ const Register = () => {
         {
           user && toast.success("You have successfully registered!");
         }
+        navigate("/");
       })
       .catch((err) => {
         const errorMessage = err.message;
@@ -93,6 +95,7 @@ const Register = () => {
         {
           user && toast.success("You have successfully registered!");
         }
+        navigate("/");
       })
       .catch((err) => {
         const errorMessage = err.message;

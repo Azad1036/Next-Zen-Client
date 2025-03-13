@@ -15,7 +15,9 @@ const UserCompaignslist = ({ myCampaignData }) => {
         <div className="overflow-x-auto rounded-lg shadow-lg">
           <table
             className={`min-w-full border rounded-lg transition-all duration-500 ${
-              theme === "synthwave" ? "bg-[#2D2D44] border-gray-700" : "bg-white border-gray-200"
+              theme === "synthwave"
+                ? "bg-[#2D2D44] border-gray-700"
+                : "bg-white border-gray-200"
             }`}
           >
             <thead>
@@ -49,14 +51,16 @@ const UserCompaignslist = ({ myCampaignData }) => {
                   <tr
                     key={campaign._id}
                     className={`hover:scale-101 transition duration-300 ${
-                      theme === "synthwave" ? "bg-[#1E1E2E] hover:bg-[#2D2D44]" : "bg-gray-50 hover:bg-gray-100"
+                      theme === "synthwave"
+                        ? "bg-[#1E1E2E] hover:bg-[#2D2D44]"
+                        : "bg-gray-50 hover:bg-gray-100"
                     }`}
                   >
                     <td className="px-6 py-4 border-b border-gray-300 font-medium">
                       {index + 1}
                     </td>
                     <td className="px-6 py-4 border-b border-gray-300">
-                      {campaign.compaignTitle}
+                      {campaign.campaignTitle}
                     </td>
                     <td className="px-6 py-4 border-b border-gray-300">
                       ${campaign.donationAmount}
