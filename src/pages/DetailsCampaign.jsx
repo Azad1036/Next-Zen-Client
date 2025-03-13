@@ -40,10 +40,10 @@ const DetailsCampaign = () => {
       campaignTitle,
       campaignType,
       donationAmount,
-      date
+      date,
     };
 
-    fetch("http://localhost:4000/donationUser", {
+    fetch("https://next-zen-server.vercel.app/donationUser", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(userData),

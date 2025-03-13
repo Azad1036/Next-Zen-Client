@@ -167,7 +167,6 @@ const Register = () => {
                   : "border-gray-300 focus:border-indigo-500 text-gray-900"
               }`}
               placeholder="Enter your PhotoUrl"
-              required
               {...register("photoURL")}
             />
           </div>

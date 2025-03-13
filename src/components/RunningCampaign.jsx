@@ -5,21 +5,21 @@ import { MainContextProviderContext } from "../provider/AuthProvider";
 const RunningCampaign = () => {
   const [campaigns, setCampaigns] = useState([]);
   const { theme, user } = useContext(MainContextProviderContext);
-  
+
   useEffect(() => {
-    fetch("http://localhost:4000/runningCampaigns")
+    fetch("https://next-zen-server.vercel.app/runningCampaigns")
       .then((res) => res.json())
       .then((data) => {
         // Get today's date (March 13, 2025) and set time to midnight for accurate comparison
-        const today = new Date('2025-03-13');
+        const today = new Date("2025-03-13");
         today.setHours(0, 0, 0, 0);
 
         // Filter campaigns where item.date is >= today
-        const filteredData = data.filter(item => {
+        const filteredData = data.filter((item) => {
           const itemDate = new Date(item.date); // Assuming your data has a 'date' property
           return itemDate >= today;
         });
-        
+
         setCampaigns(filteredData); // Set the filtered data instead of raw data
       })
       .catch((error) => console.error("Error fetching campaigns:", error));
@@ -28,9 +28,7 @@ const RunningCampaign = () => {
   return (
     <div
       className={`container mx-auto p-6 transition-colors duration-500 rounded-xl ${
-        theme === "synthwave"
-          ? " text-white"
-          : "bg-[#FDFDFD] text-gray-900"
+        theme === "synthwave" ? " text-white" : "bg-[#FDFDFD] text-gray-900"
       }`}
     >
       <h2 className="text-4xl font-bold text-center mb-12 tracking-wide">
@@ -63,9 +61,7 @@ const RunningCampaign = () => {
               <p className="text-green-500 font-bold">
                 Min Donation: ${campaign.donationAmount}
               </p>
-              <p className="text-gray-400 text-sm">
-                By: {user?.displayName} 
-              </p>
+              <p className="text-gray-400 text-sm">By: {user?.displayName}</p>
               <p className="text-gray-400 text-sm">Deadline: {campaign.date}</p>
             </div>
 

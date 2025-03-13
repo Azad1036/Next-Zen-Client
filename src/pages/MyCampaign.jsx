@@ -8,14 +8,17 @@ const MyCampaign = () => {
 
   useEffect(() => {
     if (user.email) {
-      fetch(`http://localhost:4000/myCampaign/${user.email}`)
+      fetch(`https://next-zen-server.vercel.app/myCampaign/${user.email}`)
         .then((res) => res.json())
         .then((data) => setMyCampaignData(data));
     }
   }, [user]);
   return (
     <div>
-      <UserCompaignslist myCampaignData={myCampaignData} />
+      <UserCompaignslist
+        myCampaignData={myCampaignData}
+        setMyCampaignData={setMyCampaignData}
+      />
     </div>
   );
 };

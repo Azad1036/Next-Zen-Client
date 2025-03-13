@@ -7,12 +7,11 @@ const AddNewCampaign = () => {
   const { user, theme } = useContext(MainContextProviderContext);
   const [userName, setUserName] = useState("Not Found");
 
-
   // React Hook Form
   const { handleSubmit, register, reset } = useForm();
 
   const handleAddCampaignForm = (data) => {
-    fetch("http://localhost:4000/addCampaign", {
+    fetch("https://next-zen-server.vercel.app/addCampaign", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -21,8 +20,6 @@ const AddNewCampaign = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-  
-
         if (data.insertedId) {
           Swal.fire({
             title: "Success!",

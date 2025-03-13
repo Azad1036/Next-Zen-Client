@@ -21,12 +21,12 @@ const routers = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
-        // loader: () => fetch("http://localhost:4000/campaigns"),
+        // loader: () => fetch("https://next-zen-server.vercel.app/campaigns"),
       },
       {
         path: "/allCampaign",
         element: <AllCampaign />,
-        loader: () => fetch("http://localhost:4000/campaigns"),
+        loader: () => fetch("https://next-zen-server.vercel.app/campaigns"),
       },
       {
         path: "/addCampaign",
@@ -44,7 +44,7 @@ const routers = createBrowserRouter([
           </PrivateRouter>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:4000/campaign/${params.id}`),
+          fetch(`https://next-zen-server.vercel.app/campaign/${params.id}`),
       },
       {
         path: "/myCampaign",
@@ -62,7 +62,7 @@ const routers = createBrowserRouter([
           </PrivateRouter>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:4000/campaign/${params.id}`),
+          fetch(`https://next-zen-server.vercel.app/campaign/${params.id}`),
       },
       {
         path: "/myDonations",

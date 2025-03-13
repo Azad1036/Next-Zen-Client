@@ -23,15 +23,16 @@ const UpdateCampaign = () => {
   const { handleSubmit, register, reset } = useForm();
 
   const handleUpdateCampaignForm = (data) => {
-
-
-    fetch(`http://localhost:4000/updateCampaign/${UpdateCampaignData._id}`, {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
+    fetch(
+      `https://next-zen-server.vercel.app/updateCampaign/${UpdateCampaignData._id}`,
+      {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.modifiedCount > 0) {

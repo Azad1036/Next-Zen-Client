@@ -2,9 +2,22 @@ import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { MainContextProviderContext } from "../provider/AuthProvider";
 import { Tooltip } from "react-tooltip";
+import { toast } from "react-toastify";
 
 const Navber = () => {
   const { signOutUser, user } = useContext(MainContextProviderContext);
+  const userSignOut = () => {
+    signOutUser()
+      .then(() => {
+        toast.success("SignOut Successful");
+      })
+      .catch((err) => {
+        const errorMessage = err.message;
+        {
+          errorMessage && toast.error("Pls try again");
+        }
+      });
+  };
   const links = (
     <>
       <NavLink
@@ -64,32 +77,26 @@ const Navber = () => {
             anchorSelect=".my-anchor-element"
             place="top"
           >
-            {user ? user.displayName : "Name Not Found"}
+            {user?.displayName ? user.displayName : "Name Not Found"}
           </Tooltip>
 
           {user ? (
             <>
               <div className="mr-3 w-10 h-10 border-2 border-secondary rounded-full overflow-hidden">
-                {user ? (
-                  <img
-                    className="my-anchor-element w-full h-full object-cover"
-                    src={user?.photoURL}
-                    alt="User"
-                  />
-                ) : (
-                  <img
-                    className="my-anchor-element w-full h-full object-cover"
-                    src="https://i.ibb.co.com/qLWkbpCH/photourl.png"
-                    alt="Default"
-                  />
-                )}
+                <img
+                  className="my-anchor-element w-full h-full object-cover"
+                  src={
+                    user?.photoURL || "https://i.ibb.co/qLWkbpCH/photourl.png"
+                  }
+                  alt="User"
+                />
               </div>
               <Link
                 to={"/"}
                 className="hidden lg:btn lg:btn-outline mr-2 text-base-content border-base-content hover:bg-base-content hover:text-base-200 font-medium"
-                onClick={signOutUser}
+                onClick={userSignOut}
               >
-                SignOut
+                Sign Out
               </Link>
             </>
           ) : (
@@ -132,6 +139,26 @@ const Navber = () => {
               className="menu right-0 menu-sm w-40 dropdown-content bg-base-300 rounded-box z-10 mt-2 p-2 shadow text-base-content"
             >
               {links}
+              {!user && (
+                <>
+                  <li>
+                    <Link
+                      to={"/login"}
+                      className="bg-primary text-white rounded py-2 px-4 block text-center hover:bg-secondary transition duration-300"
+                    >
+                      Log in
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={"/register"}
+                      className="bg-primary text-white rounded py-2 px-4 block text-center hover:bg-secondary transition duration-300 mt-2"
+                    >
+                      Register
+                    </Link>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </div>

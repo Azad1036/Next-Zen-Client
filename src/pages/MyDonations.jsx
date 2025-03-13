@@ -9,7 +9,7 @@ const MyDonations = () => {
 
   useEffect(() => {
     if (user.email) {
-      fetch(`http://localhost:4000/myDonation/${user.email}`)
+      fetch(`https://next-zen-server.vercel.app/myDonation/${user.email}`)
         .then((res) => res.json())
         .then((data) => setMyCampaignData(data));
     }

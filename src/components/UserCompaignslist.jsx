@@ -1,10 +1,40 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { MainContextProviderContext } from "../provider/AuthProvider";
+import Swal from "sweetalert2";
 
-const UserCompaignslist = ({ myCampaignData }) => {
+const UserCompaignslist = ({ myCampaignData, setMyCampaignData }) => {
   const { theme } = useContext(MainContextProviderContext);
 
+  const handleDeleteCampaigns = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`https://next-zen-server.vercel.app/campaign/${id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.deletedCount > 0) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success",
+              });
+              const remaning = myCampaignData.filter((cam) => cam._id !== id);
+              setMyCampaignData(remaning);
+            }
+          });
+      }
+    });
+  };
   return (
     <div
       className={`font-ibm-plex min-h-screen py-10 transition-all duration-500 ${
@@ -81,6 +111,7 @@ const UserCompaignslist = ({ myCampaignData }) => {
                           Update
                         </Link>
                         <button
+                          onClick={() => handleDeleteCampaigns(campaign._id)}
                           className={`px-4 py-2 rounded-lg shadow-md transition-all font-semibold ${
                             theme === "synthwave"
                               ? "bg-red-500 hover:bg-red-700 text-white"
